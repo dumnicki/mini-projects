@@ -7,20 +7,51 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
 </head>
 <body>
-<h1>Student</h1>
-Name: <b th:text="${student.firstName}" /> <b th:text="${student.lastName}" /><br/>
-Email: <span th:text="${student.email}" /><br/>
-Skills:
-<span th:each="course : ${student.courseList}">
-			<br/>&nbsp;&nbsp;<span th:text="${course.label}" /> - <span th:text="${course.description}" />
-		</span>
-<form th:action="@{/student/{id}/courses(id=${student.id})}" method="post" enctype="multipart/form-data" >
-    <select name="courseId">
-        <option th:each="course : ${courseList}"
-                th:value="${course.id}"
-                th:text="${course.description}">Skill</option>
-    </select>
-    <input type="submit" value="Add Course"/>
-</form>
+<div class="container">
+    <div class="pb-2 mt-4 mb-2 border-bottom" id="banner">
+        <div class="row">
+            <div class="col-lg-8 col-md-7 col-sm-6">
+                <h1>Student</h1>
+                <form class="m-lg-3" th:action="@{/student/{id}/courses(id=${student.id})}" method="post" enctype="multipart/form-data" >
+                    <fieldset>
+                        <div class="mb-3 row">
+                            <label class="col-lg-2 form-label fw-bold">Name</label>
+                            <div class="col-lg-6">
+                                <input type="text" class="form-control" disabled="disabled"
+                                       th:value="${student.firstName + ' ' + student.lastName}"/>
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label class="col-lg-2 form-label fw-bold">Email</label>
+                            <div class="col-lg-6">
+                                <input type="text" class="form-control" disabled="disabled"
+                                       th:value="${student.email}"/>
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label class="col-lg-2 form-label fw-bold">Courses</label>
+                            <div class="col-lg-10">
+                                <div th:each="course : ${student.courseList}">
+                                    <span th:text="${course.label}" /> - <span th:text="${course.description}" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <div class="col-lg-6 offset-lg-2">
+                                <div class="input-group">
+                                    <select name="courseId" class="form-control">
+                                    <option th:each="course : ${courseList}"
+                                            th:value="${course.id}"
+                                            th:text="${course.description}">Course</option>
+                                    </select>
+                                    <button type="submit" class="btn btn-outline-secondary">Add course</button>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
